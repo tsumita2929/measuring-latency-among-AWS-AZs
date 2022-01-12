@@ -2,7 +2,6 @@
 .terraform.lock.hcl
 terraform.tfstate*
 .DS_Store
-*.png
 *.drawio
 *.log
 *.pem
