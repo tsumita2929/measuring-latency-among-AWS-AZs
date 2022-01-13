@@ -71,7 +71,12 @@ resource "aws_key_pair" "key_pair" {
 # EC2
 # https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/latest
 #############################################################################
-# EC2 Instances(Public, Run netperf client)
+# Get latest Amazon Linux 2 AMI ID from SSM parameter store
+data "aws_ssm_parameter" "amzn2_ami" {
+  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-kernel-5.10-hvm-x86_64-gp2"
+}
+
+# EC2 Instances(Public, Install netperf client)
 module "ec2_instance_public" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 3.0"
@@ -80,7 +85,7 @@ module "ec2_instance_public" {
 
   name = "instance-public-${each.key}"
 
-  ami                         = var.ami_id
+  ami                         = data.aws_ssm_parameter.amzn2_ami.value
   instance_type               = var.instance_type
   key_name                    = local.key_pair_name
   associate_public_ip_address = true
@@ -112,7 +117,7 @@ module "ec2_instance_private" {
 
   name = "instance-private-${each.key}"
 
-  ami                         = var.ami_id
+  ami                         = data.aws_ssm_parameter.amzn2_ami.value
   instance_type               = var.instance_type
   key_name                    = local.key_pair_name
   associate_public_ip_address = false
@@ -125,7 +130,7 @@ module "ec2_instance_private" {
     Terraform   = "true"
     Environment = var.env
   }
-  user_data  = <<USERDATA
+  user_data = <<USERDATA
 #!/bin/bash
   sudo yum update -y && sudo yum install -y gcc autoconf automake texinfo
   sudo su -

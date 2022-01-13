@@ -10,7 +10,7 @@ Terraformを使ってAWSのAZ間のレイテンシを測定するリソースを
 ## 前提
 - [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)がインストール済みであること
 - 適切な権限を付与したAWS Credentialを作成済みであること
-    - 今回はテストのために"AmazonEC2FullAccess"と"AmazonVPCFullAccess"を付与したAWS Credentialを作成しました
+    - 今回はテストのために"AmazonEC2FullAccess"、"AmazonVPCFullAccess"、"AmazonSSMReadOnlyAccess"を付与したAWS Credentialを作成しました
 - AWS認証を行うための認証情報が設定済みであること([Terraform公式 ドキュメント
 ](https://registry.terraform.io/providers/hashicorp/aws/latest/docs))
 
@@ -81,7 +81,7 @@ ssh -i AWS-Tokyo-Check-latency.pem ec2-user@DESTINATION_INSTANCE_PUBLIC_IP
 ```
 
 3. レイテンシ測定  
-以下コマンド例の`DESTINATION_IP1~3`を`1.`で出力された"instance_private_subnet_private_ips"へ置き換える。  
+以下コマンド例の`DESTINATION_IP1~3`を`1.`で出力された"instance_private_subnet_private_ips"へ置き変えて実行する。  
 
 レイテンシ測定コマンド:
 ```sh
@@ -161,8 +161,7 @@ Destroy complete! Resources: 31 destroyed.
 terraform init && terraform apply \
     -var='availability_zone_names=["apne3-az1", "apne3-az2", "apne3-az3"]' \
     -var='region=ap-northeast-3' \
-    -var='region_name=Osaka' \
-    -var='ami_id=ami-0f1ffb565070e6947'
+    -var='region_name=Osaka'
 ```
 
 #### リソース削除
@@ -170,8 +169,7 @@ terraform init && terraform apply \
 terraform destroy \
     -var='availability_zone_names=["apne3-az1", "apne3-az2", "apne3-az3"]' \
     -var='region=ap-northeast-3' \
-    -var='region_name=Osaka' \
-    -var='ami_id=ami-0f1ffb565070e6947'
+    -var='region_name=Osaka'
 ```
 
 # 作成者

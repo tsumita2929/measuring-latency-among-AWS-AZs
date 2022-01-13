@@ -36,15 +36,8 @@ variable "allow_ssh_ip" {
   default     = "0.0.0.0/0"
 }
 
-variable "ami_id" {
-  type = string
-  # Tokyo
-  default = "ami-0218d08a1f9dac831" # Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type - ami-0218d08a1f9dac831 (64-bit x86)
-  # Osaka
-  # default     = "ami-0f1ffb565070e6947" # Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type - ami-0f1ffb565070e6947
-}
-
 variable "instance_type" {
+  description = "Instance type of EC2 to run the test"
   type    = string
   default = "m5.large"
 }
