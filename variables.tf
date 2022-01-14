@@ -38,6 +38,6 @@ variable "allow_ssh_ip" {
 
 variable "instance_type" {
   description = "Instance type of EC2 to run the test"
-  type    = string
-  default = "m5.large"
+  type        = string
+  default     = "m5.large"
 }
