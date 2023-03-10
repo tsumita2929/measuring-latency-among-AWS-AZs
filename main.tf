@@ -104,8 +104,8 @@ module "ec2_instance_public" {
   sudo yum update -y && sudo yum install -y gcc autoconf automake texinfo
   sudo su -
   NETPERF_VER="2.7.0"
-  wget -O netperf-${NETPERF_VER}.tar.gz -c https://github.com/HewlettPackard/netperf/archive/refs/tags/netperf-${NETPERF_VER}.tar.gz
-  tar xf netperf-${NETPERF_VER}.tar.gz && cd netperf-netperf-${NETPERF_VER} && ./configure --enable-spin && make -j && make -j install
+  wget -O netperf-$${NETPERF_VER}.tar.gz -c https://github.com/HewlettPackard/netperf/archive/refs/tags/netperf-$${NETPERF_VER}.tar.gz
+  tar xf netperf-$${NETPERF_VER}.tar.gz && cd netperf-netperf-$${NETPERF_VER} && ./configure --enable-spin && make -j && make -j install
 USERDATA
 }
 
@@ -136,8 +136,8 @@ module "ec2_instance_private" {
   sudo yum update -y && sudo yum install -y gcc autoconf automake texinfo
   sudo su -
   NETPERF_VER="2.7.0"
-  wget -O netperf-${NETPERF_VER}.tar.gz -c https://github.com/HewlettPackard/netperf/archive/refs/tags/netperf-${NETPERF_VER}.tar.gz
-  tar xf netperf-${NETPERF_VER}.tar.gz && cd netperf-netperf-${NETPERF_VER} && ./configure --enable-spin && make -j && make -j install
+  wget -O netperf-$${NETPERF_VER}.tar.gz -c https://github.com/HewlettPackard/netperf/archive/refs/tags/netperf-$${NETPERF_VER}.tar.gz
+  tar xf netperf-$${NETPERF_VER}.tar.gz && cd netperf-netperf-$${NETPERF_VER} && ./configure --enable-spin && make -j && make -j install
   netserver -4
 USERDATA
   # Wait for NAT-GW to be created
