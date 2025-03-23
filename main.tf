@@ -74,7 +74,8 @@ resource "aws_key_pair" "key_pair" {
 #############################################################################
 # Get latest Amazon Linux 2 AMI ID from SSM parameter store
 data "aws_ssm_parameter" "amzn2_ami" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-kernel-5.10-hvm-x86_64-gp2"
+  # AL2023
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
 }
 
 # EC2 Instances(Public, Install netperf client)
@@ -105,7 +106,7 @@ module "ec2_instance_public" {
   sudo su -
   NETPERF_VER="2.7.0"
   wget -O netperf-$${NETPERF_VER}.tar.gz -c https://github.com/HewlettPackard/netperf/archive/refs/tags/netperf-$${NETPERF_VER}.tar.gz
-  tar xf netperf-$${NETPERF_VER}.tar.gz && cd netperf-netperf-$${NETPERF_VER} && ./configure --enable-spin && make -j && make -j install
+  tar xf netperf-$${NETPERF_VER}.tar.gz && cd netperf-netperf-$${NETPERF_VER} && CFLAGS=-fcommon LDFLAGS=-fcommon ./configure --enable-spin && make -j && make -j install
 USERDATA
 }
 
@@ -137,7 +138,7 @@ module "ec2_instance_private" {
   sudo su -
   NETPERF_VER="2.7.0"
   wget -O netperf-$${NETPERF_VER}.tar.gz -c https://github.com/HewlettPackard/netperf/archive/refs/tags/netperf-$${NETPERF_VER}.tar.gz
-  tar xf netperf-$${NETPERF_VER}.tar.gz && cd netperf-netperf-$${NETPERF_VER} && ./configure --enable-spin && make -j && make -j install
+  tar xf netperf-$${NETPERF_VER}.tar.gz && cd netperf-netperf-$${NETPERF_VER} && CFLAGS=-fcommon LDFLAGS=-fcommon ./configure --enable-spin && make -j && make -j install
   netserver -4
 USERDATA
   # Wait for NAT-GW to be created
